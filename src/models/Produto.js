@@ -16,6 +16,10 @@ class Produto extends Model {
       foreignKey: "categoria_id",
       as: "categoria",
     });
+    this.hasMany(models.ItensPedido, {
+      foreignKey: "produto_id",
+      as: "produtos",
+    });
   }
 }
 

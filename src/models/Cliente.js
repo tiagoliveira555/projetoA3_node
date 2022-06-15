@@ -13,7 +13,11 @@ class Cliente extends Model {
   }
 
   static associate(models) {
-    this.hasMany(models.Endereco, { foreignKey: "cliente_id", as: "endereco" });
+    this.hasMany(models.Endereco, {
+      foreignKey: "cliente_id",
+      as: "enderecos",
+    });
+    this.hasMany(models.Pedido, { foreignKey: "cliente_id", as: "pedidos" });
   }
 }
 

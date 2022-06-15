@@ -12,16 +12,27 @@ module.exports = {
     }
   },
 
+  async findById(req, res) {
+    const { id } = req.params;
+
+    try {
+      const produtos = await Produto.findByPk(id, { include: "categoria" });
+
+      return res.status(200).send(produtos);
+    } catch (error) {
+      return res.status(400).send({ erro: error });
+    }
+  },
+
   async create(req, res) {
     try {
-      const { categoria_id } = req.params;
-      const { nome, preco } = req.body;
+      const { nome, preco, categoria_id } = req.body;
 
       const categoria = await Categoria.findByPk(categoria_id);
 
       if (!categoria) {
-        return res.status(401).json({
-          status: 401,
+        return res.status(404).json({
+          status: 404,
           message: "Catagoria não encontrada",
         });
       }
@@ -46,10 +57,7 @@ module.exports = {
       const produto = await Produto.findByPk(id);
 
       if (produto) {
-        await Produto.update(
-          { nome, preco },
-          { where: { id } }
-        );
+        await Produto.update({ nome, preco }, { where: { id } });
 
         return res
           .status(200)

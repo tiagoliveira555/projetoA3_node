@@ -2,27 +2,16 @@ const Cliente = require("../models/Cliente");
 const Endereco = require("../models/Endereco");
 
 module.exports = {
-  async find(req, res) {
-    const { cliente_id } = req.params;
+  async findAll(req, res) {
+    
+    const enderecos = await Endereco.findAll();
 
-    const cliente = await Cliente.findByPk(cliente_id, {
-      include: { association: "endereco" },
-    });
-
-    if (!cliente) {
-      return res.status(400).send({
-        status: 400,
-        message: "Cliente não encontrado!",
-      });
-    }
-
-    return res.status(200).send(cliente);
+    return res.status(200).send(enderecos);
   },
 
   async create(req, res) {
     try {
-      const { cliente_id } = req.params;
-      const { logradouro, numero, bairro, cidade, uf } = req.body;
+      const { logradouro, numero, bairro, cidade, uf, cliente_id } = req.body;
 
       const cliente = await Cliente.findByPk(cliente_id);
 

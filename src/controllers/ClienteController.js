@@ -15,6 +15,20 @@ module.exports = {
     }
   },
 
+  async findById(req, res) {
+    const { id } = req.params;
+
+    try {
+      const cliente = await Cliente.findByPk(id, {
+        include: { association: "enderecos" },
+      });
+
+      return res.status(200).json(cliente);
+    } catch (error) {
+      return res.status(400).send({ erro: error });
+    }
+  },
+
   async create(req, res) {
     try {
       const { nome, email, cpf } = req.body;

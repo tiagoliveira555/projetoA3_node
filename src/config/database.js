@@ -6,7 +6,7 @@ module.exports = {
   database: "projetoA3",
   dialect: "mysql",
   define: {
-    timestamp: true,
+    timestamps: true,
     underscored: true,
   },
 };
